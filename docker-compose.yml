@@ -5,7 +5,7 @@ services:
     image: nitincherian/udagram-api-feed
     build: ./udagram-api-feed
 
-  udagram-api-feed:
+  udagram-api-users:
     image: nitincherian/udagram-api-users
     build: ./udagram-api-users
 
