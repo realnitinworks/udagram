@@ -12,3 +12,7 @@ services:
   udagram-frontend:
     image: nitincherian/udagram-frontend
     build: ./udagram-frontend
+
+  udagram-reverse-proxy:
+    image: nitincherian/udagram-reverse-proxy
+    build: ./udagram-reverse-proxy
