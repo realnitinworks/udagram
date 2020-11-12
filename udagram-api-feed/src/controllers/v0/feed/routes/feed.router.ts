@@ -1,6 +1,7 @@
 import {Router, Request, Response} from 'express';
 import {FeedItem} from '../models/FeedItem';
 import {NextFunction} from 'connect';
+import { v4 as uuid4 } from 'uuid';
 import * as jwt from 'jsonwebtoken';
 import * as AWS from '../../../../aws';
 import * as c from '../../../../config/config';
@@ -26,8 +27,18 @@ export function requireAuth(req: Request, res: Response, next: NextFunction) {
   });
 }
 
+
+function logRequest(req: Request, res: Response, next: NextFunction) {
+  let reqId = uuid4()
+  console.log(`${new Date().toLocaleString()}: ${reqId} - Request ${req.method} for ${req.url}`);
+  return next();
+}
+
+
 // Get all feed items
-router.get('/', async (req: Request, res: Response) => {
+router.get('/',
+  logRequest, 
+  async (req: Request, res: Response) => {
   const items = await FeedItem.findAndCountAll({order: [['id', 'DESC']]});
   items.rows.map((item) => {
     if (item.url) {
@@ -39,6 +50,7 @@ router.get('/', async (req: Request, res: Response) => {
 
 // Get a feed resource
 router.get('/:id',
+    logRequest,
     async (req: Request, res: Response) => {
       const {id} = req.params;
       const item = await FeedItem.findByPk(id);
@@ -48,6 +60,7 @@ router.get('/:id',
 // Get a signed url to put a new item in the bucket
 router.get('/signed-url/:fileName',
     requireAuth,
+    logRequest,
     async (req: Request, res: Response) => {
       const {fileName} = req.params;
       const url = AWS.getPutSignedUrl(fileName);
@@ -57,6 +70,7 @@ router.get('/signed-url/:fileName',
 // Create feed with metadata
 router.post('/',
     requireAuth,
+    logRequest,
     async (req: Request, res: Response) => {
       const caption = req.body.caption;
       const fileName = req.body.url; // same as S3 key name
