@@ -12,6 +12,8 @@ The project is split into two parts:
 
 ![DeploymentModel](/screenshots/Deployment_model.png)
 
+[Image Courtesy](https://blog.juadel.com/2020/05/15/create-a-kubernetes-cluster-in-amazon-eks-using-a-reverse-proxy/)
+
 ## Containers and Microservices
 
 1. `/feed` and `/user` backends are separated into independent microservices.
