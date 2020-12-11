@@ -28,7 +28,7 @@ The project includes Travis CI pipeline to automatically push the Docker images 
 1. The Microservices are deployed using Kubernetes cluster on AWS.
 2. Uses the NGINX reverse proxy to redirect the request to the correct microservice (/feed or /users) based on path based load-balancing.
 3. The Kubernetes pods are replicted for self-healing.
-4. The Kubernetes deployements are autoscaled with CPU metrics threshold. 
+4. The Kubernetes deployments are autoscaled with CPU metrics threshold. 
 
 ## Debugging, Monitoring, and Logging
 
